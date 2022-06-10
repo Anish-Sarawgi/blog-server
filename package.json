@@ -1,5 +1,17 @@
 {
+  "name": "mm_summer_task-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "it": "^1.1.1"
+    "express": "^4.18.1",
+    "mongoose": "^6.3.6",
+    "morgan": "^1.10.0"
   }
 }
