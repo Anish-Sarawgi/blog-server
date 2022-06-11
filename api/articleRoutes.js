@@ -9,5 +9,7 @@ router.get("/:id", articleController.article_read);
 router.post("/", articleController.article_post); 
 router.put("/:id", articleController.article_update); 
 router.delete("/:id", articleController.article_delete); 
+router.post("/:id/like", articleController.article_like); 
+router.delete("/:id/like", articleController.article_unlike); 
 
 module.exports = router;
