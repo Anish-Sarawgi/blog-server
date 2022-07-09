@@ -11,7 +11,8 @@ const article_all = (req,res)=>{
 const article_trending = (req,res)=>{
     Article.find()
     .sort({ views : -1})
-    .then(result => res.send(result));
+    .then(result => res.send(result))
+    .catch(err=>console.log(err));
 }
 
 // Read Article
@@ -19,10 +20,8 @@ const article_read = (req,res)=>{
     const id = req.params.id
 
     Article.findById(id)
-    .then(result => res.send(result))
-    .catch(()=> res.send('there is no article exists with this id'))
-
-    Article.updateOne(id, {$inc: {views: 1} })
+    .then(Article.findByIdAndUpdate(id, {$inc: {views: 1} }).then(result => res.send(result)))
+    .catch(()=> res.send('there is no article exists with this id'));
 }
 
 // Create new article
@@ -40,9 +39,9 @@ const article_update =(req,res)=>{
     const updatedArticle = req.body
     const id =req.params.id
 
-    Article.updateOne(id, { $set: updatedArticle } )
-    .then(()=> res.send('Aricle Updated'))
-    .catch(err => console.log(err))
+    Article.findByIdAndUpdate(id, updatedArticle)
+    .then(()=> res.send('Article Updated'))
+    .catch(err => console.log(err));
 }
 
 // Delete Article
@@ -58,16 +57,18 @@ const article_delete = (req,res)=>{
 const article_like = (req,res)=>{
     const id = req.params.id
 
-    Article.updateOne(id, {$inc: {likes: 1} })
-    .catch(err => console.log(err))
+    Article.findByIdAndUpdate(id, {$inc: {likes: 1} })
+    .then(res.send('liked'))
+    .catch(err => console.log(err));
 }
 
 // Unlike Article
 const article_unlike = (req,res)=>{
     const id = req.params.id
 
-    Article.updateOne(id, {$inc: {likes: -1} })
-    .catch(err => console.log(err))
+    Article.findByIdAndUpdate(id, {$inc: {likes: -1} })
+    .then(res.send('Unliked'))
+    .catch(err => console.log(err));
 }
 
 module.exports ={
