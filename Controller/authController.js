@@ -3,21 +3,19 @@ const bcrypt = require("bcrypt");
 
 //REGISTER
 const register = async (req, res) => {
-  
-    const salt = await bcrypt.genSalt(11);
-    const hashedPass = await bcrypt.hash(req.body.password, salt);
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPass,
-    });
+  const salt = await bcrypt.genSalt(11);
+  const hashedPass = await bcrypt.hash(req.body.password, salt);
+  const newUser = new User({
+    username: req.body.username,
+    email: req.body.email,
+    password: hashedPass,
+  });
 
-    newUser.save()
+  newUser
+    .save()
     .then((data) => res.send(`User Registered. Details: ${data}`))
-    .catch(err => console.log(err));
-  }
-;
-
+    .catch((err) => console.log(err));
+};
 //LOGIN
 const login = async (req, res) => {
   try {
@@ -34,6 +32,7 @@ const login = async (req, res) => {
   }
 };
 
-module.exports ={
-    register,login
-}
+module.exports = {
+  register,
+  login,
+};
